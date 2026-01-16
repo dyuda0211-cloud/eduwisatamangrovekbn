@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fasilitas - Kampung Bahari Nusantara Sukawali</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = { theme: { extend: { colors: { kbn: { 50: '#f0f8ff', 100: '#d9eeff', 300: '#6fc3ff', 500: '#0078e6', 600: '#005db4', 700: '#004382', 800: '#002951', 900: '#00131f' } }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    main { animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .nav-link.active { color: #0078e6; font-weight: 700; border-bottom: 2px solid #0078e6; }
+    
+    /* Scroll snap for gallery */
+    .scrolling-wrapper {
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1.5rem;
+        padding-bottom: 1rem;
+    }
+    .card-snap { flex: 0 0 auto; scroll-snap-align: center; }
+    .scrolling-wrapper::-webkit-scrollbar { height: 8px; }
+    .scrolling-wrapper::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+    .scrolling-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <a href="index.html" class="flex items-center gap-3 cursor-pointer">
+            <div class="w-10 h-10 bg-kbn-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg"><i class="fas fa-anchor"></i></div>
+            <span class="font-bold text-xl text-kbn-800 tracking-tight">eduwisatamangrovekbn</span>
+        </a>
+        <div class="hidden md:flex space-x-8">
+          <a href="index.html" class="nav-link text-slate-600 hover:text-kbn-600 px-3 py-2 text-sm font-medium transition">Beranda</a>
+          <a href="kegiatan.html" class="nav-link text-slate-600 hover:text-kbn-600 px-3 py-2 text-sm font-medium transition">Kegiatan</a>
+          <a href="fasilitas.html" class="nav-link active px-3 py-2 text-sm font-medium transition">Fasilitas</a>
+        </div>
+        <div class="flex md:hidden">
+          <button id="btn-menu" class="text-slate-600 hover:text-kbn-600 p-2"><i class="fas fa-bars text-xl"></i></button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-kbn-50">Beranda</a>
+        <a href="kegiatan.html" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-kbn-50">Kegiatan</a>
+        <a href="fasilitas.html" class="block px-3 py-2 rounded-md text-base font-medium text-kbn-600 bg-kbn-50">Fasilitas</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow">
+    <!-- HERO HEADER (Background Biru) -->
+    <div class="bg-kbn-600 text-white py-16 relative overflow-hidden">
+        <!-- Texture Overlay -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">Fasilitas Kampung Bahari Nusantara Sukawali</h1>
+          <p class="text-kbn-100 text-lg">Beragam sarana penunjang kegiatan masyarakat dan pengunjung.</p>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Grid Fasilitas -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- Toilet -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-restroom"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Toilet</h3>
+                <p class="text-slate-600 text-sm">Tersedia toilet bersih untuk pengunjung dan peserta kegiatan KBN.</p>
+            </div>
+            <!-- Parkir -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-parking"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Parkir</h3>
+                <p class="text-slate-600 text-sm">Area parkir yang luas untuk kendaraan roda dua maupun empat.</p>
+            </div>
+            <!-- Rumah Pintar -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-book-reader"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Rumah Pintar</h3>
+                <p class="text-slate-600 text-sm">Pusat edukasi masyarakat dan anak-anak nelayan, lengkap dengan sarana belajar.</p>
+            </div>
+            <!-- Mushola -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-mosque"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Mushola</h3>
+                <p class="text-slate-600 text-sm">Fasilitas ibadah yang bersih dan nyaman untuk pengunjung.</p>
+            </div>
+            <!-- Warung -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-utensils"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Warung</h3>
+                <p class="text-slate-600 text-sm">Warung warga sekitar yang menyediakan makanan dan minuman lokal.</p>
+            </div>
+            <!-- Sekretariat -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-building"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Sekretariat KBN</h3>
+                <p class="text-slate-600 text-sm">Pusat administrasi dan koordinasi kegiatan KBN Sukawali.</p>
+            </div>
+        </div>
+
+        <!-- Galeri Fasilitas -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-kbn-800">Galeri Fasilitas</h2>
+            <p class="text-slate-600">Dokumentasi berbagai fasilitas di kawasan.</p>
+        </div>
+
+        <div class="relative group">
+            <div id="fasilitas-gallery" class="scrolling-wrapper pb-4">
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Rumah Pintar</div>
+                 </div>
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/9.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Area Mangrove</div>
+                 </div>
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Fasilitas Ibadah</div>
+                 </div>
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/9.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Warung Kuliner</div>
+                 </div>
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Sekretariat</div>
+                 </div>
+            </div>
+            <!-- Nav Buttons -->
+            <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-md hover:bg-white transition" onclick="scrollLeft('fasilitas-gallery')"><i class="fas fa-chevron-left text-kbn-600"></i></button>
+            <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-md hover:bg-white transition" onclick="scrollRight('fasilitas-gallery')"><i class="fas fa-chevron-right text-kbn-600"></i></button>
+        </div>
+    </div>
+  </main>
+
+  <!-- FOOTER LENGKAP -->
+  <footer class="bg-kbn-900 text-white py-12 mt-auto border-t border-kbn-800">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-sm">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 bg-kbn-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <i class="fas fa-anchor"></i>
+            </div>
+            <h4 class="text-lg font-bold text-white">eduwisatamangrovekbn</h4>
+        </div>
+        <p class="text-slate-400 leading-relaxed mb-6">
+            Membangun masa depan pesisir melalui edukasi, pariwisata, dan pemberdayaan masyarakat yang berkelanjutan.
+        </p>
+        <div class="flex gap-4">
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-kbn-500 transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-500 transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-lg font-bold mb-4 text-kbn-300">Tautan Cepat</h4>
+        <ul class="space-y-2 text-slate-400">
+            <li><a href="index.html" class="hover:text-white transition">Beranda</a></li>
+            <li><a href="kegiatan.html" class="hover:text-white transition">Kegiatan</a></li>
+            <li><a href="fasilitas.html" class="hover:text-white transition">Fasilitas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-lg font-bold mb-4 text-kbn-300">Kontak & Lokasi</h4>
+        <ul class="space-y-3 text-slate-400">
+            <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-kbn-500"></i> <span>Sukawali, Kec. Pakuhaji, Kab. Tangerang, Banten</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-envelope text-kbn-500"></i> info@kbn-sukawali.id</li>
+            <li class="flex items-center gap-3"><i class="fab fa-whatsapp text-kbn-500"></i> +62 856-9446-8028</li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-12 pt-8 border-t border-kbn-800 text-slate-500 text-xs">
+        &copy; <span id="year"></span> eduwisatamangrovekbn. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('btn-menu').addEventListener('click', () => { document.getElementById('mobile-menu').classList.toggle('hidden'); });
+
+    function scrollLeft(id) { document.getElementById(id).scrollBy({ left: -320, behavior: 'smooth' }); }
+    function scrollRight(id) { document.getElementById(id).scrollBy({ left: 320, behavior: 'smooth' }); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+  <!-- === HALAMAN 2: KEGIATAN (Grid Menu + Detail View) === -->
+    <section id="kegiatan" class="page-section">
+      <div class="bg-kbn-600 text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">Aktivitas di KBN Sukawalit</h1>
+          <p class="text-kbn-100 text-lg">Temukan beragam kegiatan menarik yang mencerminkan pilar utama kami.</p>
+        </div>
+      </div>
+
+      <!-- VIEW 1: GRID MENU (Daftar Aktivitas) -->
+      <div id="activity-grid" class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Card 1: Pariwisata -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('1')">
+                <img src="/images/susur.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Wisata Susur Sungai</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 2: Lingkungan/Kehutanan -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('2')">
+                <img src="/images/tanam.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Penanaman Mangrove</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 3: Ekonomi -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('3')">
+                <img src="/images/13.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Produk Olahan UMKM</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 4: Edukasi -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('4')">
+                <img src="/images/14.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Edukasi Pesisir</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 5: Kesehatan/Lingkungan -->
+             <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('5')">
+                <img src="/images/15.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Aksi Bersih Pantai</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 6: Pertahanan -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('6')">
+                <img src="/images/16.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Mitigasi Bencana</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 2: DETAIL ACTIVITY (Hidden Default) -->
+      <div id="activity-detail" class="hidden max-w-5xl mx-auto px-6 py-12">
+        <button onclick="closeActivityDetail()" class="mb-6 flex items-center text-kbn-600 hover:text-kbn-800 font-bold transition">
+            <div class="w-8 h-8 rounded-full bg-kbn-100 flex items-center justify-center mr-2"><i class="fas fa-arrow-left"></i></div>
+            Kembali ke Menu Kegiatan
+        </button>
+        
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            <div class="h-64 md:h-96 bg-gray-200 relative">
+                <img id="detail-img" src="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <h2 id="detail-title" class="absolute bottom-6 left-6 md:left-10 text-3xl md:text-5xl font-bold text-white drop-shadow-md">Judul Kegiatan</h2>
+            </div>
+            <div class="p-8 md:p-10">
+                <div id="detail-content" class="prose prose-lg text-slate-700 max-w-none leading-relaxed">
+                    <!-- Konten dinamis di sini -->
+                </div>
+                
+                <div class="mt-10 pt-8 border-t border-gray-100 flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <p class="text-slate-500 text-sm italic">Tertarik dengan kegiatan ini? Hubungi kami untuk reservasi.</p>
+                    <a href="https://wa.me/6285694468028" target="_blank" class="inline-flex items-center bg-green-500 text-white px-8 py-3 rounded-full hover:bg-green-600 transition font-bold shadow-lg hover:shadow-green-500/30">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i> Tanya Detail Kegiatan Ini
+                    </a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>

@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>eduwisatamangrovekbn - Kampung Bahari Nusantara Sukawali</title>
+  <meta name="description" content="Eduwisata Mangrove KBN Sukawali - Jelajahi, Belajar, Berkontribusi" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            kbn: {
+              50: '#f0f8ff',
+              100: '#d9eeff',
+              200: '#a3d9ff',
+              300: '#6fc3ff',
+              400: '#2ea4ff',
+              500: '#0078e6', 
+              600: '#005db4',
+              700: '#004382',
+              800: '#002951',
+              900: '#00131f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Page Transitions */
+    .page-section {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-link.active {
+      color: #0078e6;
+      font-weight: 700;
+      border-bottom: 2px solid #0078e6;
+    }
+
+    /* Carousel Styles */
+    .carousel-container { position: absolute; inset: 0; z-index: 0; }
+    .carousel-slide {
+        position: absolute; inset: 0; opacity: 0;
+        transition: opacity 1s ease-in-out;
+        display: flex; align-items: center; justify-content: center;
+        background-color: #000;
+    }
+    .carousel-slide.active-slide { opacity: 1; z-index: 1; }
+    .hero-overlay { background: linear-gradient(to top, rgba(0, 30, 60, 0.9), rgba(0, 30, 60, 0.2)); }
+
+    /* Horizontal Scroll Snap */
+    .scrolling-wrapper {
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1.5rem;
+        padding-bottom: 1rem;
+    }
+    .card-snap {
+        flex: 0 0 auto;
+        scroll-snap-align: center;
+    }
+    .scrolling-wrapper::-webkit-scrollbar { height: 8px; }
+    .scrolling-wrapper::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+    .scrolling-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .scrolling-wrapper::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="bg-gray-50 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- TOP BAR (Socials & Map) -->
+  <div class="bg-kbn-900 text-white py-2 text-sm relative z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <!-- KIRI ATAS: Kontak -->
+        <div class="flex items-center gap-6">
+            <a href="https://wa.me/6285694468028" target="_blank" class="hover:text-green-400 flex items-center gap-2 transition">
+                <i class="fab fa-whatsapp text-lg"></i> <span class="hidden sm:inline">WhatsApp</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="hover:text-pink-400 flex items-center gap-2 transition">
+                <i class="fab fa-instagram text-lg"></i> <span class="hidden sm:inline">Instagram</span>
+            </a>
+            <a href="mailto:info@kbn-sukawali.id" class="hover:text-blue-300 flex items-center gap-2 transition">
+                <i class="fas fa-envelope text-lg"></i> <span class="hidden sm:inline">Email</span>
+            </a>
+        </div>
+        <!-- BAWAHNYA (di mobile) / KANAN (di desktop): Gmaps -->
+        <div>
+            <a href="https://maps.google.com/?q=Kampung+Bahari+Nusantara+Sukawali" target="_blank" class="hover:text-kbn-300 flex items-center gap-2 transition">
+                <i class="fas fa-map-marker-alt text-red-500 text-lg"></i> Lokasi KBN Sukawali
+            </a>
+        </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300 border-b border-gray-100" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="showPage('home')">
+            <div class="w-10 h-10 bg-kbn-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                <i class="fas fa-anchor"></i>
+            </div>
+            <span class="font-bold text-xl text-kbn-800 tracking-tight">eduwisatamangrovekbn</span>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8">
+          <button onclick="showPage('home')" id="nav-home" class="nav-link text-slate-600 hover:text-kbn-600 px-3 py-2 text-sm font-medium transition">Beranda</button>
+          <button onclick="showPage('kegiatan')" id="nav-kegiatan" class="nav-link text-slate-600 hover:text-kbn-600 px-3 py-2 text-sm font-medium transition">Kegiatan</button>
+          <button onclick="showPage('fasilitas')" id="nav-fasilitas" class="nav-link text-slate-600 hover:text-kbn-600 px-3 py-2 text-sm font-medium transition">Fasilitas</button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="flex md:hidden">
+          <button id="btn-menu" class="text-slate-600 hover:text-kbn-600 focus:outline-none p-2">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <button onclick="showPage('home')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-kbn-600 hover:bg-kbn-50">Beranda</button>
+        <button href="kegiatan.html" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-kbn-600 hover:bg-kbn-50">Kegiatan</button>
+        <button onclick="showPage('fasilitas')" class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:text-kbn-600 hover:bg-kbn-50">Fasilitas</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENT CONTAINER -->
+  <main class="flex-grow">
+
+    <!-- === HALAMAN 1: HOME === -->
+    <section id="home" class="page-section active">
+      
+      <!-- 1. Hero Carousel (Slide 1 Video, Sisa Foto) -->
+      <div class="relative h-[600px] md:h-[700px] overflow-hidden text-white bg-black">
+        <div class="carousel-container" id="hero-carousel">
+            
+            <!-- SLIDE 1: Video Profil (Autoplay) -->
+            <div class="carousel-slide active-slide">
+                <div class="w-full h-full relative bg-slate-900 overflow-hidden">
+                    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-60">
+                        <source src="/images/video/video1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Gradient Overlay khusus Video -->
+                    <div class="absolute inset-0 bg-black/40 z-0"></div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Foto (Mangrove Landscape) -->
+            <div class="carousel-slide">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105" 
+                     style="background-image: url('/images/1.jpg');">
+                     <div class="absolute inset-0 bg-black/30"></div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Foto (Aktivitas/Pesisir) -->
+             <div class="carousel-slide">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105" 
+                     style="background-image: url('/images/2.jpg');">
+                     <div class="absolute inset-0 bg-black/30"></div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Foto (Edukasi/Anak-anak) -->
+            <div class="carousel-slide">
+                <div class="w-full h-full bg-cover bg-center transition-transform duration-[2000ms] hover:scale-105" 
+                     style="background-image: url('/images/3.jpg');">
+                     <div class="absolute inset-0 bg-black/30"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Carousel Nav Controls -->
+        <button class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition group" onclick="prevSlide()">
+            <i class="fas fa-chevron-left group-hover:scale-110 transition"></i>
+        </button>
+        <button class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/30 backdrop-blur-sm p-3 rounded-full transition group" onclick="nextSlide()">
+            <i class="fas fa-chevron-right group-hover:scale-110 transition"></i>
+        </button>
+
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+            <button onclick="goToSlide(0)" class="w-2 h-2 rounded-full bg-white opacity-100 transition indicator"></button>
+            <button onclick="goToSlide(1)" class="w-2 h-2 rounded-full bg-white opacity-50 transition indicator"></button>
+            <button onclick="goToSlide(2)" class="w-2 h-2 rounded-full bg-white opacity-50 transition indicator"></button>
+            <button onclick="goToSlide(3)" class="w-2 h-2 rounded-full bg-white opacity-50 transition indicator"></button>
+        </div>
+
+        <!-- Overlay Text Content (Tetap di atas slide apapun) -->
+        <div class="absolute inset-0 hero-overlay z-10 flex flex-col items-center justify-center text-center px-6 pt-16 pointer-events-none">
+            <div class="pointer-events-auto"> <!-- Agar tombol bisa diklik -->
+                <h1 class="text-3xl md:text-6xl font-extrabold mb-6 tracking-tight drop-shadow-xl animate-fade-in-up text-white">
+                Kampung Bahari Nusantara
+                <span class="block text-kbn-300 mt-2">Sukawali</span>
+                </h1>
+                <p class="text-lg md:text-2xl max-w-4xl mb-10 text-white font-light drop-shadow-md leading-relaxed animate-fade-in-up delay-100">
+                "Jelajahi keindahan hutan mangrove sambil belajar, berpetualang, dan berkontribusi menjaga masa depan pesisir."
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-200">
+                <a href="#profil-section" class="bg-white text-kbn-700 font-bold px-8 py-3 rounded-full shadow-lg hover:bg-kbn-50 transition transform hover:-translate-y-1">
+                    Lihat Profil
+                </a>
+                <a href="#pilar-section" class="bg-kbn-500 text-white border-2 border-transparent font-bold px-8 py-3 rounded-full shadow-lg hover:bg-kbn-600 transition transform hover:-translate-y-1">
+                    Kegiatan Utama
+                </a>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- 2. Selayang Pandang (2 Kolom: Teks & Video Box with Effect) -->
+      <div class="max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
+         <!-- Dekorasi Background Tipis -->
+         <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-kbn-100 rounded-full blur-3xl opacity-50 z-0"></div>
+         <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-50 z-0"></div>
+
+        <div class="relative z-10 text-center mb-16">
+            <h2 class="text-3xl font-bold text-kbn-800">Selayang Pandang</h2>
+            <div class="w-24 h-1 bg-kbn-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+        
+        <div class="relative z-10 grid md:grid-cols-2 gap-16 items-center">
+            <!-- Kolom Kiri: Teks -->
+            <div class="text-left space-y-6">
+                <p class="text-xl md:text-2xl text-slate-800 leading-relaxed font-semibold">
+                    "Kampung Bahari Nusantara (KBN) Sukawali merupakan wujud nyata kolaborasi TNI AL dengan masyarakat pesisir."
+                </p>
+                <p class="text-slate-600 leading-relaxed text-lg">
+                    Program ini hadir untuk mewujudkan ketahanan wilayah melalui pengembangan ekonomi, edukasi, lingkungan, dan pariwisata berbasis mangrove. Dengan sinergi ini, kami berkomitmen menciptakan ekosistem lestari dan masyarakat yang sejahtera.
+                </p>
+                <div class="pt-4">
+                    <a href="https://wa.me/6285694468028" target="_blank" class="text-kbn-600 font-bold hover:text-kbn-800 transition flex items-center gap-2 group text-lg">
+                        Hubungi Kami <i class="fab fa-whatsapp text-xl group-hover:scale-110 transition"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Kolom Kanan: Video Autoplay dengan Efek Smoke/Fade -->
+            <div class="relative flex justify-center items-center">
+                
+                <!-- Efek "Smoke/Glow" di belakang video -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-kbn-300/40 to-blue-400/30 blur-[40px] rounded-full transform scale-110 animate-pulse"></div>
+                
+                <!-- Container Video Utama -->
+                <div class="relative w-full rounded-2xl overflow-hidden shadow-2xl h-64 md:h-80 bg-black group transform hover:scale-[1.01] transition duration-500">
+                    <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                        <source src="/images/video/video1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    <!-- Overlay Gradient Fade di pinggiran dalam video (Vignette Effect) -->
+                    <div class="absolute inset-0 pointer-events-none shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]"></div>
+                    
+                    <div class="absolute bottom-4 left-4 z-20">
+                         <span class="bg-white/90 backdrop-blur-sm text-kbn-800 text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wider flex items-center gap-2 shadow-sm">
+                            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> Video Profil
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- 3. Profil & Struktur Organisasi -->
+      <section id="profil-section" class="bg-slate-50 py-16">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- KIRI: Profil KBN (Updated with Info) -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="h-8 w-2 bg-kbn-500 rounded-full"></div>
+                        <h2 class="text-3xl font-bold text-slate-800">Profil KBN</h2>
+                    </div>
+                    
+                    <div class="rounded-xl overflow-hidden shadow-lg mb-6">
+                        <img src="/images/4.jpg" alt="Hutan Mangrove Sukawali" class="w-full h-72 object-cover hover:scale-105 transition duration-700">
+                    </div>
+
+                    <div class="prose text-slate-700 leading-relaxed text-justify">
+                        <p class="font-medium text-lg text-kbn-800">
+                            Terletak di pesisir utara Tangerang, KBN Sukawali dianugerahi kekayaan ekosistem mangrove yang melimpah.
+                        </p>
+                        <p>
+                            Program ini bertujuan untuk mengentaskan kemiskinan di wilayah pesisir dan memperkuat ketahanan wilayah laut melalui pemberdayaan masyarakat. Desa Sukawali dipilih karena potensi maritimnya yang besar serta semangat gotong royong masyarakatnya untuk maju dan mandiri.
+                        </p>
+                        
+                        <!-- Info Box yang dipindahkan dari Selayang Pandang & Diperbarui -->
+                        <div class="mt-8 bg-white p-6 rounded-xl border border-kbn-100 shadow-lg grid gap-6">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kbn-100 p-3 rounded-full text-kbn-600">
+                                    <i class="fas fa-map-marked-alt text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-kbn-700 text-lg mb-1">Lokasi</h4>
+                                    <p class="text-slate-600 font-medium">Desa Sukawali, Kec. Pakuhaji, Kab. Tangerang, Banten.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4">
+                                <div class="bg-kbn-100 p-3 rounded-full text-kbn-600">
+                                    <i class="fas fa-users-cog text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-kbn-700 text-lg mb-1">Penggerak</h4>
+                                    <p class="text-slate-600 font-medium">Kelompok Kampung Bahari Nusantara (Masyarakat Desa).</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4 border-t pt-4 border-slate-100">
+                                <div class="bg-kbn-100 p-3 rounded-full text-kbn-600">
+                                    <i class="fas fa-anchor text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-kbn-700 text-lg mb-1">Penggagas</h4>
+                                    <p class="text-slate-600 font-medium">TNI Angkatan Laut (Lantamal III Jakarta).</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- KANAN: Struktur Organisasi (Foto) -->
+                <div class="flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="h-8 w-2 bg-kbn-500 rounded-full"></div>
+                        <h2 class="text-3xl font-bold text-slate-800">Struktur Organisasi</h2>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-xl shadow-lg border border-slate-100 flex-grow flex flex-col">
+                        <!-- Foto Struktur dengan tinggi yang dibatasi agar sejajar/tidak terlalu besar -->
+                        <div class="w-full bg-slate-100 rounded-lg flex flex-col items-center justify-center text-slate-500 relative overflow-hidden group border-2 border-dashed border-slate-300 h-96 lg:h-[600px]">
+                            <i class="fas fa-sitemap text-6xl mb-4 text-kbn-300 group-hover:scale-110 transition"></i>
+                            <p class="font-bold text-lg">Foto Bagan Struktur Organisasi</p>
+                            <p class="text-xs mt-2 text-slate-500 px-6 text-center"></p>
+                            <!-- Jika sudah ada gambar asli, gunakan tag img seperti ini: -->
+                            <!-- <img src="/images/struktur-organisasi.jpg" class="w-full h-full object-contain"> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </section>
+
+      <!-- 4. 7 Pilar Utama -->
+      <section id="pilar-section" class="py-16 bg-white">
+          <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-kbn-800">7 Pilar Utama Kampung Bahari Nusantara</h2>
+                <p class="text-slate-600 mt-2">Klaster pembinaan strategis untuk kemajuan pesisir</p>
+                <div class="w-24 h-1 bg-kbn-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Grid diubah menjadi 4 kolom untuk menampung 7 item dengan rapi -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 1. Edukasi -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/3.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-blue-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">01</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Edukasi</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Rumah Pintar, pelatihan & wisata edukatif mangrove untuk masyarakat.</p>
+                    </div>
+                </div>
+                <!-- 2. Ekonomi -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/5.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-green-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">02</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Ekonomi</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Penguatan UMKM & pengelolaan kawasan hutan untuk ketahanan pangan.</p>
+                    </div>
+                </div>
+                <!-- 3. Kesehatan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/7.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-red-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">03</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Kesehatan</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Penyuluhan hidup sehat, donor darah, dan medical check up lansia.</p>
+                    </div>
+                </div>
+                <!-- 4. Pariwisata -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/2.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-orange-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">04</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Pariwisata</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Pengembangan edu-wisata mangrove sebagai destinasi lokal berkelanjutan.</p>
+                    </div>
+                </div>
+                <!-- 5. Pertahanan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/8.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-slate-700 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">05</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Pertahanan</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Pelatihan mitigasi bencana, pengamanan hutan, dan pembuatan alat pemecah ombak.</p>
+                    </div>
+                </div>
+                <!-- 6. Lingkungan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/6.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-emerald-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">06</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Lingkungan</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Bersih-bersih pantai dan pengelolaan sampah untuk pelestarian pesisir.</p>
+                    </div>
+                </div>
+                <!-- 7. Kehutanan -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:-translate-y-2 transition duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="/images/9.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute bottom-0 left-0 bg-teal-600 text-white px-3 py-1 text-sm font-bold rounded-tr-lg">07</div>
+                    </div>
+                    <div class="p-6 text-center">
+                        <h3 class="font-bold text-lg text-slate-800 mb-2">Kehutanan</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Penanaman mangrove (rehabilitasi), pembibitan, dan perawatan hutan.</p>
+                    </div>
+                </div>
+
+            </div>
+          </div>
+      </section>
+
+      <!-- 5. Paket Eduwisata Mangrove (Slider) -->
+      <section class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-kbn-800">Paket Eduwisata Mangrove</h2>
+                    <p class="text-slate-600">Pilihan paket wisata edukatif terbaik</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="bg-white border p-3 rounded-full hover:bg-kbn-100 shadow-sm transition" onclick="scrollLeft('paket-slider')"><i class="fas fa-chevron-left text-kbn-600"></i></button>
+                    <button class="bg-white border p-3 rounded-full hover:bg-kbn-100 shadow-sm transition" onclick="scrollRight('paket-slider')"><i class="fas fa-chevron-right text-kbn-600"></i></button>
+                </div>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div id="paket-slider" class="scrolling-wrapper">
+                
+                <!-- Card Paket 1 -->
+                <div class="card-snap w-80 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden flex-shrink-0 group">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="/images/10.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        <div class="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold shadow-md">Terpopuler</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-1 text-slate-800">Paket Jelajah</h3>
+                        <p class="text-kbn-600 font-bold text-lg mb-4">Rp 50.000 <span class="text-sm text-gray-400 font-normal">/ pax</span></p>
+                        
+                        <div class="space-y-3 text-sm text-slate-600 mb-6 border-t pt-4">
+                            <p class="flex items-center gap-2"><i class="fas fa-clock text-kbn-500"></i> Durasi 2 Jam</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Pemandu Lokal</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Bibit Mangrove</p>
+                        </div>
+                        
+                        <a href="https://wa.me/6285694468028?text=Halo%20Admin,%20saya%20tertarik%20pesan%20Paket%20Jelajah" target="_blank" class="block w-full text-center bg-kbn-600 hover:bg-kbn-700 text-white font-bold py-3 rounded-xl transition shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-1"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Paket 2 -->
+                <div class="card-snap w-80 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden flex-shrink-0 group">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="/images/11.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-1 text-slate-800">Paket Edukasi</h3>
+                        <p class="text-kbn-600 font-bold text-lg mb-4">Rp 75.000 <span class="text-sm text-gray-400 font-normal">/ pax</span></p>
+                        
+                        <div class="space-y-3 text-sm text-slate-600 mb-6 border-t pt-4">
+                            <p class="flex items-center gap-2"><i class="fas fa-clock text-kbn-500"></i> Durasi 4 Jam</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Makan Siang Seafood</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Workshop Olahan</p>
+                        </div>
+
+                        <a href="https://wa.me/6285694468028?text=Halo%20Admin,%20saya%20tertarik%20pesan%20Paket%20Edukasi" target="_blank" class="block w-full text-center bg-kbn-600 hover:bg-kbn-700 text-white font-bold py-3 rounded-xl transition shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-1"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card Paket 3 (Custom) -->
+                <div class="card-snap w-80 bg-white border border-gray-200 rounded-2xl shadow-lg overflow-hidden flex-shrink-0 group">
+                    <div class="h-48 relative overflow-hidden bg-slate-100 flex items-center justify-center">
+                        <img src="/images/12.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-1 text-slate-800">Paket Grup/Sekolah</h3>
+                        <p class="text-kbn-600 font-bold text-lg mb-4">Hubungi Admin</p>
+                        
+                        <div class="space-y-3 text-sm text-slate-600 mb-6 border-t pt-4">
+                            <p class="flex items-center gap-2"><i class="fas fa-clock text-kbn-500"></i> Fleksibel</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Kapasitas Besar</p>
+                            <p class="flex items-center gap-2"><i class="fas fa-check-circle text-kbn-500"></i> Program Khusus</p>
+                        </div>
+
+                        <a href="https://wa.me/6285694468028?text=Halo%20Admin,%20saya%20ingin%20tanya%20Paket%20Grup" target="_blank" class="block w-full text-center bg-kbn-600 hover:bg-kbn-700 text-white font-bold py-3 rounded-xl transition shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-1"></i> Hubungi Admin
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </section>
+
+      <!-- 6. Hasil Olahan Produk Mangrove (Catalog Slider) -->
+      <section class="py-16 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-8 flex flex-col md:flex-row justify-between items-end gap-4">
+                <div>
+                    <h2 class="text-3xl font-bold text-kbn-800">Hasil Olahan Produk Mangrove</h2>
+                    <p class="text-slate-600 mt-2 max-w-2xl text-sm leading-relaxed">
+                        Produk hasil pemanfaatan mangrove yang diolah secara berkelanjutan untuk mendukung ekonomi masyarakat pesisir dan pelestarian lingkungan.
+                    </p>
+                </div>
+                 <!-- Navigasi Slider Produk -->
+                 <div class="flex gap-2">
+                    <button class="bg-gray-50 border p-2 rounded-lg hover:bg-kbn-50" onclick="scrollLeft('produk-slider')"><i class="fas fa-arrow-left text-sm text-slate-600"></i></button>
+                    <button class="bg-gray-50 border p-2 rounded-lg hover:bg-kbn-50" onclick="scrollRight('produk-slider')"><i class="fas fa-arrow-right text-sm text-slate-600"></i></button>
+                </div>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div id="produk-slider" class="scrolling-wrapper pb-6">
+                
+                <!-- Produk 1 -->
+                <div class="card-snap w-64 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition duration-300 flex-shrink-0 group">
+                    <div class="h-40 bg-gray-50 relative overflow-hidden rounded-t-xl">
+                         <div class="w-full h-full flex items-center justify-center bg-green-50 text-green-200">
+                            <img src="/images/1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    
+                         </div>
+                         <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition"></div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg text-slate-800">Sirup Mangrove</h4>
+                        <p class="text-slate-500 text-xs mb-3 line-clamp-2">Minuman segar kaya vitamin C dari buah Pidada (Sonneratia).</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-kbn-700 font-bold">Rp 15.000</span>
+                            <a href="https://wa.me/6285694468028?text=Pesan%20Sirup%20Mangrove" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 2 -->
+                <div class="card-snap w-64 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition duration-300 flex-shrink-0 group">
+                    <div class="h-40 bg-gray-50 relative overflow-hidden rounded-t-xl">
+                         <div class="w-full h-full flex items-center justify-center bg-orange-50 text-orange-200">
+                            <img src="/images/4.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    
+                         </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg text-slate-800">Dodol Mangrove</h4>
+                        <p class="text-slate-500 text-xs mb-3 line-clamp-2">Camilan manis legit khas pesisir, cocok untuk oleh-oleh.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-kbn-700 font-bold">Rp 20.000</span>
+                            <a href="https://wa.me/6285694468028?text=Pesan%20Dodol%20Mangrove" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 3 -->
+                <div class="card-snap w-64 bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-xl transition duration-300 flex-shrink-0 group">
+                    <div class="h-40 bg-gray-50 relative overflow-hidden rounded-t-xl">
+                         <div class="w-full h-full flex items-center justify-center bg-blue-50 text-blue-200">
+                             <img src="/images/6.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                    
+                         </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-lg text-slate-800">Batik Mangrove</h4>
+                        <p class="text-slate-500 text-xs mb-3 line-clamp-2">Kain batik tulis/cap dengan pewarna alami dari kulit mangrove.</p>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-kbn-700 font-bold">Rp 150.000</span>
+                            <a href="https://wa.me/6285694468028?text=Pesan%20Batik%20Mangrove" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                                Pesan
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Produk 4 (Placeholder) -->
+                 <div class="card-snap w-64 bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <div class="text-center text-gray-400 p-6">
+                        <i class="fas fa-plus-circle text-3xl mb-2"></i>
+                        <p class="text-sm">Produk Lainnya</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </section>
+
+      <!-- 7. Hubungi Kami & Lokasi -->
+      <section class="py-16 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-kbn-800">Hubungi Kami & Lokasi</h2>
+                <p class="text-slate-600 mt-2">Kami siap melayani pertanyaan dan kunjungan Anda</p>
+                <div class="w-24 h-1 bg-kbn-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+                <!-- KIRI: Sosial Media & Maps -->
+                <div class="flex flex-col gap-6">
+                    <!-- Sosial Media Buttons -->
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col items-center justify-center">
+                        <h3 class="text-lg font-bold text-slate-700 mb-4 uppercase tracking-wider">Sosial Media Kami</h3>
+                        <div class="flex gap-6">
+                            <a href="https://wa.me/6285694468028" target="_blank" class="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition shadow-lg transform hover:scale-110 group">
+                                <i class="fab fa-whatsapp text-3xl group-hover:rotate-12 transition"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" class="w-14 h-14 bg-pink-500 rounded-full flex items-center justify-center text-white hover:bg-pink-600 transition shadow-lg transform hover:scale-110 group">
+                                <i class="fab fa-instagram text-3xl group-hover:rotate-12 transition"></i>
+                            </a>
+                            <a href="mailto:info@kbn-sukawali.id" class="w-14 h-14 bg-blue-500 rounded-full flex items-center justify-center text-white hover:bg-blue-600 transition shadow-lg transform hover:scale-110 group">
+                                <i class="fas fa-envelope text-3xl group-hover:rotate-12 transition"></i>
+                            </a>
+                        </div>
+                        <p class="text-sm text-slate-500 mt-4">Klik ikon di atas untuk menghubungi kami</p>
+                    </div>
+
+                    <!-- Google Maps -->
+                    <div class="rounded-2xl overflow-hidden shadow-lg border border-gray-100 flex-grow min-h-[300px]">
+                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3967.3006764585166!2d106.63489807498944!3d-6.090176993896065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6a030026e6378d%3A0x6700c2420367201c!2sKampung%20Bahari%20Nusantara%20TNI%20AL%20Pos%20Tanjung%20Pasir!5e0!3m2!1sid!2sid!4v1709224567890!5m2!1sid!2sid" 
+                         width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                
+                <!-- KANAN: Form Hubungi Kami -->
+                <div class="bg-kbn-800 p-8 rounded-2xl shadow-xl border border-kbn-700 flex flex-col justify-center h-full">
+                    <h3 class="text-2xl font-bold text-white mb-2">Kirim Pesan</h3>
+                    <p class="text-kbn-200 mb-8 text-sm">Silakan isi formulir di bawah ini, pesan akan otomatis terkirim ke WhatsApp kami.</p>
+                    
+                    <form id="contactForm" class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-kbn-200 mb-1">Nama Lengkap</label>
+                                <input type="text" id="name" class="w-full bg-kbn-900/50 border border-kbn-600 text-white rounded-lg p-3 focus:ring-2 focus:ring-kbn-400 outline-none transition placeholder-kbn-400" placeholder="Nama Anda" required>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-kbn-200 mb-1">Email</label>
+                                <input type="email" id="email" class="w-full bg-kbn-900/50 border border-kbn-600 text-white rounded-lg p-3 focus:ring-2 focus:ring-kbn-400 outline-none transition placeholder-kbn-400" placeholder="email@contoh.com" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-kbn-200 mb-1">Pesan</label>
+                            <textarea id="message" rows="5" class="w-full bg-kbn-900/50 border border-kbn-600 text-white rounded-lg p-3 focus:ring-2 focus:ring-kbn-400 outline-none transition placeholder-kbn-400" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-white text-kbn-800 hover:bg-kbn-50 font-bold py-4 rounded-lg transition shadow-md transform hover:-translate-y-1">
+                            <i class="fab fa-whatsapp mr-2 text-green-600"></i> Kirim ke WhatsApp
+                        </button>
+                    </form>
+                    <div id="sentMsg" class="hidden mt-4 p-4 bg-green-500/20 text-green-200 rounded-lg text-center border border-green-500/50">
+                        <i class="fas fa-check-circle mr-2"></i> Mengalihkan ke WhatsApp...
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      </section>
+
+    </section>
+
+    <!-- === HALAMAN 2: KEGIATAN (Grid Menu + Detail View) === -->
+    <section id="kegiatan" class="page-section">
+      <div class="bg-kbn-600 text-white py-16 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">Aktivitas di KBN Sukawali</h1>
+          <p class="text-kbn-100 text-lg">Temukan beragam kegiatan menarik yang mencerminkan pilar utama kami.</p>
+        </div>
+      </div>
+
+      <!-- VIEW 1: GRID MENU (Daftar Aktivitas) -->
+      <div id="activity-grid" class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Card 1: Pariwisata -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('1')">
+                <img src="/images/susur.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Wisata Susur Sungai</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 2: Lingkungan/Kehutanan -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('2')">
+                <img src="/images/tanam.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Penanaman Mangrove</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 3: Ekonomi -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('3')">
+                <img src="/images/13.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Produk Olahan UMKM</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 4: Edukasi -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('4')">
+                <img src="/images/14.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Edukasi Pesisir</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 5: Kesehatan/Lingkungan -->
+             <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('5')">
+                <img src="/images/15.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Aksi Bersih Pantai</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+            <!-- Card 6: Pertahanan -->
+            <div class="cursor-pointer group rounded-xl overflow-hidden shadow-lg relative h-72 hover:shadow-2xl transition duration-500" onclick="openActivityDetail('6')">
+                <img src="/images/16.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white text-2xl font-bold mb-1">Mitigasi Bencana</h3>
+                    <p class="text-slate-300 text-sm opacity-0 group-hover:opacity-100 transition transform translate-y-4 group-hover:translate-y-0 duration-300">Klik untuk detail <i class="fas fa-arrow-right ml-1"></i></p>
+                </div>
+            </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 2: DETAIL ACTIVITY (Hidden Default) -->
+      <div id="activity-detail" class="hidden max-w-5xl mx-auto px-6 py-12">
+        <button onclick="closeActivityDetail()" class="mb-6 flex items-center text-kbn-600 hover:text-kbn-800 font-bold transition">
+            <div class="w-8 h-8 rounded-full bg-kbn-100 flex items-center justify-center mr-2"><i class="fas fa-arrow-left"></i></div>
+            Kembali ke Menu Kegiatan
+        </button>
+        
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            <div class="h-64 md:h-96 bg-gray-200 relative">
+                <img id="detail-img" src="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <h2 id="detail-title" class="absolute bottom-6 left-6 md:left-10 text-3xl md:text-5xl font-bold text-white drop-shadow-md">Judul Kegiatan</h2>
+            </div>
+            <div class="p-8 md:p-10">
+                <div id="detail-content" class="prose prose-lg text-slate-700 max-w-none leading-relaxed">
+                    <!-- Konten dinamis di sini -->
+                </div>
+                
+                <div class="mt-10 pt-8 border-t border-gray-100 flex flex-col md:flex-row gap-4 justify-between items-center">
+                    <p class="text-slate-500 text-sm italic">Tertarik dengan kegiatan ini? Hubungi kami untuk reservasi.</p>
+                    <a href="https://wa.me/6285694468028" target="_blank" class="inline-flex items-center bg-green-500 text-white px-8 py-3 rounded-full hover:bg-green-600 transition font-bold shadow-lg hover:shadow-green-500/30">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i> Tanya Detail Kegiatan Ini
+                    </a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- === HALAMAN 3: FASILITAS (UPDATED) === -->
+    <section id="fasilitas" class="page-section">
+      <div class="bg-kbn-600 text-white py-20">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+          <h1 class="text-3xl md:text-5xl font-bold mb-4">Fasilitas Kampung Bahari Nusantara Sukawali</h1>
+          <p class="text-kbn-100 text-lg">Beragam sarana penunjang kegiatan masyarakat dan pengunjung, dirancang untuk kenyamanan, edukasi, serta keberlanjutan lingkungan di kawasan pesisir Sukawali.</p>
+        </div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-6 py-12">
+        <!-- Grid Fasilitas -->
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- Toilet -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-restroom"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Toilet</h3>
+                <p class="text-slate-600 text-sm">Tersedia toilet bersih untuk pengunjung dan peserta kegiatan KBN.</p>
+            </div>
+            <!-- Parkir -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-parking"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Parkir</h3>
+                <p class="text-slate-600 text-sm">Area parkir yang luas untuk kendaraan roda dua maupun empat.</p>
+            </div>
+            <!-- Rumah Pintar -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                <div class="w-14 h-14 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-book-reader"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Rumah Pintar</h3>
+                <p class="text-slate-600 text-sm">Pusat edukasi masyarakat dan anak-anak nelayan, lengkap dengan sarana belajar.</p>
+            </div>
+            <!-- Mushola -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-mosque"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Mushola</h3>
+                <p class="text-slate-600 text-sm">Fasilitas ibadah yang bersih dan nyaman untuk pengunjung.</p>
+            </div>
+            <!-- Warung -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-utensils"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Warung</h3>
+                <p class="text-slate-600 text-sm">Warung warga sekitar yang menyediakan makanan dan minuman lokal.</p>
+            </div>
+            <!-- Sekretariat -->
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100 hover:-translate-y-1 transition duration-300">
+                 <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-full flex items-center justify-center text-2xl mb-4"><i class="fas fa-building"></i></div>
+                <h3 class="font-bold text-xl text-slate-800 mb-2">Sekretariat KBN</h3>
+                <p class="text-slate-600 text-sm">Pusat administrasi dan koordinasi kegiatan KBN Sukawali.</p>
+            </div>
+        </div>
+
+        <!-- Galeri Fasilitas (Carousel) -->
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-kbn-800">Galeri Fasilitas</h2>
+            <p class="text-slate-600">Dokumentasi berbagai fasilitas di kawasan Kampung Bahari Nusantara Sukawali.</p>
+        </div>
+
+        <div class="relative group">
+            <!-- Scroll Container -->
+            <div id="fasilitas-gallery" class="scrolling-wrapper pb-4">
+                 <!-- Item 1 -->
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Rumah Pintar</div>
+                 </div>
+                 <!-- Item 2 -->
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/9.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Area Mangrove</div>
+                 </div>
+                 <!-- Item 3 -->
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Fasilitas Ibadah</div>
+                 </div>
+                 <!-- Item 4 -->
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/9.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Warung Kuliner</div>
+                 </div>
+                  <!-- Item 5 -->
+                 <div class="card-snap w-80 h-56 rounded-xl overflow-hidden shadow-lg flex-shrink-0 relative">
+                     <img src="/images/3.jpg" class="w-full h-full object-cover">
+                     <div class="absolute bottom-0 inset-x-0 bg-black/60 text-white p-2 text-sm text-center">Sekretariat</div>
+                 </div>
+            </div>
+             <!-- Nav Buttons -->
+            <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-md hover:bg-white transition" onclick="scrollLeft('fasilitas-gallery')"><i class="fas fa-chevron-left text-kbn-600"></i></button>
+            <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 p-3 rounded-full shadow-md hover:bg-white transition" onclick="scrollRight('fasilitas-gallery')"><i class="fas fa-chevron-right text-kbn-600"></i></button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-kbn-900 text-white py-12 mt-auto border-t border-kbn-800">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8 text-sm">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 bg-kbn-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                <i class="fas fa-anchor"></i>
+            </div>
+            <h4 class="text-lg font-bold text-white">eduwisatamangrovekbn</h4>
+        </div>
+        <p class="text-slate-400 leading-relaxed mb-6">
+            Membangun masa depan pesisir melalui edukasi, pariwisata, dan pemberdayaan masyarakat yang berkelanjutan.
+        </p>
+        <div class="flex gap-4">
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-kbn-500 transition"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-500 transition"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-green-500 transition"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="text-lg font-bold mb-4 text-kbn-300">Tautan Cepat</h4>
+        <ul class="space-y-2 text-slate-400">
+            <li><button onclick="showPage('home')" class="hover:text-white transition">Beranda</button></li>
+            <li><button onclick="showPage('kegiatan')" class="hover:text-white transition">Kegiatan</button></li>
+            <li><button onclick="showPage('fasilitas')" class="hover:text-white transition">Fasilitas</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-lg font-bold mb-4 text-kbn-300">Kontak & Lokasi</h4>
+        <ul class="space-y-3 text-slate-400">
+            <li class="flex items-start gap-3"><i class="fas fa-map-marker-alt mt-1 text-kbn-500"></i> <span>Sukawali, Kec. Pakuhaji, Kab. Tangerang, Banten</span></li>
+            <li class="flex items-center gap-3"><i class="fas fa-envelope text-kbn-500"></i> info@kbn-sukawali.id</li>
+            <li class="flex items-center gap-3"><i class="fab fa-whatsapp text-kbn-500"></i> +62 856-9446-8028</li>
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-12 pt-8 border-t border-kbn-800 text-slate-500 text-xs">
+        &copy; <span id="year"></span> eduwisatamangrovekbn. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Chatbot Script -->
+  <script> window.chtlConfig = { chatbotId: "8213334146" } </script>
+  <script async data-id="8213334146" id="chtl-script" type="text/javascript" src="https://chatling.ai/js/embed.js"></script>
+
+  <!-- JavaScript Logis -->
+  <script>
+    // Tahun Footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile Menu
+    const btnMenu = document.getElementById('btn-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    btnMenu.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+
+    // SPA Navigation Logic
+    function showPage(pageId) {
+        document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+        const target = document.getElementById(pageId);
+        if(target) {
+            target.classList.add('active');
+            window.scrollTo(0,0);
+        }
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        const activeLink = document.getElementById('nav-' + pageId);
+        if(activeLink) activeLink.classList.add('active');
+        if(!mobileMenu.classList.contains('hidden')) mobileMenu.classList.add('hidden');
+    }
+    // Set default home active
+    document.getElementById('nav-home').classList.add('active');
+
+    // --- CAROUSEL LOGIC ---
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const totalSlides = slides.length;
+    let slideInterval;
+
+    function updateCarousel() {
+        slides.forEach((slide, index) => {
+            if (index === currentSlide) {
+                slide.classList.add('active-slide');
+                slide.style.opacity = '1';
+                slide.style.zIndex = '1';
+            } else {
+                slide.classList.remove('active-slide');
+                slide.style.opacity = '0';
+                slide.style.zIndex = '0';
+            }
+        });
+        
+        // Update Indicators (Dots)
+        if(indicators && indicators.length > 0) {
+            indicators.forEach((ind, index) => {
+                if(index === currentSlide) {
+                    ind.style.opacity = '1';
+                } else {
+                    ind.style.opacity = '0.5';
+                }
+            });
+        }
+    }
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+        resetTimer();
+    }
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+        resetTimer();
+    }
+    function goToSlide(index) {
+        currentSlide = index;
+        updateCarousel();
+        resetTimer();
+    }
+    function startTimer() { slideInterval = setInterval(nextSlide, 6000); }
+    function resetTimer() { clearInterval(slideInterval); startTimer(); }
+    
+    startTimer();
+
+    // --- ACTIVITY DETAIL LOGIC (Halaman Kegiatan) ---
+    // Diperbarui sesuai 6 kartu kegiatan yang mencerminkan pilar
+    const activityData = {
+        '1': {
+            title: 'Wisata Susur Sungai',
+            img: '/images/susur.jpg',
+            content: `
+                <p><strong>Nikmati pengalaman tak terlupakan menyusuri sungai di antara rimbunnya hutan mangrove.</strong></p>
+                <p>Kegiatan ini merupakan bagian dari pilar <strong>Pariwisata</strong>. Anda akan diajak berkeliling menggunakan perahu nelayan tradisional yang aman dan nyaman, sambil dipandu oleh guide lokal yang akan menjelaskan tentang ekosistem mangrove dan biota yang hidup di dalamnya.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Apa yang akan Anda dapatkan?</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Perjalanan perahu selama 1 jam.</li>
+                    <li>Life vest (pelampung) standar keselamatan.</li>
+                    <li>Guide lokal yang ramah dan berpengetahuan.</li>
+                    <li>Spot foto eksklusif di tengah hutan mangrove.</li>
+                    <li>Kesempatan melihat burung-burung pesisir (bird watching).</li>
+                </ul>
+            `
+        },
+        '2': {
+            title: 'Penanaman Mangrove',
+            img: '/images/tanam.jpg',
+            content: `
+                <p><strong>Jadilah pahlawan lingkungan dengan berkontribusi langsung menanam mangrove.</strong></p>
+                <p>Mendukung pilar <strong>Kehutanan dan Lingkungan</strong>, program ini mengajak Anda untuk meninggalkan jejak positif bagi bumi. Mangrove yang Anda tanam akan membantu mencegah abrasi pantai, menyerap karbon, dan menjadi rumah bagi ikan-ikan kecil.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Detail Kegiatan:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Edukasi singkat mengenai jenis-jenis mangrove dan cara menanam yang benar.</li>
+                    <li>Praktek langsung menanam bibit di area konservasi.</li>
+                    <li>Papan nama (tagging) pada pohon yang Anda tanam.</li>
+                    <li>Sertifikat partisipasi pelestarian lingkungan.</li>
+                </ul>
+            `
+        },
+        '3': {
+            title: 'Produk Olahan UMKM',
+            img: '/images/13.jpg',
+            content: `
+                <p><strong>Pemberdayaan ekonomi masyarakat pesisir melalui produk lokal.</strong></p>
+                <p>Sebagai wujud pilar <strong>Ekonomi</strong>, kami mengadakan workshop dan bazar produk olahan mangrove. Anda bisa belajar cara mengolah buah mangrove (seperti Pidada) menjadi sirup, dodol, atau kerupuk yang bernilai jual tinggi.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Fasilitas Workshop:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Bahan baku buah mangrove segar.</li>
+                    <li>Peralatan masak lengkap.</li>
+                    <li>Resep rahasia olahan khas Sukawali.</li>
+                    <li>Hasil olahan bisa dibawa pulang.</li>
+                </ul>
+            `
+        },
+        '4': {
+            title: 'Edukasi Pesisir & Rumah Pintar',
+            img: '/images/14.jpg',
+            content: `
+                <p><strong>Membangun generasi cerdas dan peduli lingkungan.</strong></p>
+                <p>Dalam pilar <strong>Edukasi</strong>, KBN Sukawali menyediakan Rumah Pintar sebagai pusat belajar. Anak-anak dan pengunjung dapat membaca buku tentang maritim, mengikuti kelas lingkungan, dan mengenal potensi laut Indonesia sejak dini.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Program Kami:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Perpustakaan pesisir.</li>
+                    <li>Kelas pengenalan biota laut.</li>
+                    <li>Lomba menggambar tema laut.</li>
+                </ul>
+            `
+        },
+        '5': {
+            title: 'Aksi Bersih Pantai & Kesehatan',
+            img: '/images/15.jpg',
+            content: `
+                <p><strong>Menjaga kesehatan lingkungan dan masyarakat.</strong></p>
+                <p>Menggabungkan pilar <strong>Lingkungan dan Kesehatan</strong>, kegiatan ini meliputi aksi gotong royong membersihkan sampah plastik di pantai serta penyuluhan kesehatan bagi warga sekitar dan pengunjung.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Kegiatan Rutin:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Jumat Bersih (Clean Up Day).</li>
+                    <li>Pengelolaan sampah daur ulang.</li>
+                    <li>Pemeriksaan kesehatan gratis dan donor darah berkala.</li>
+                </ul>
+            `
+        },
+        '6': {
+            title: 'Mitigasi Bencana Pesisir',
+            img: '/images/16.jpg',
+            content: `
+                <p><strong>Siaga dan tangguh menghadapi potensi bencana.</strong></p>
+                <p>Sebagai bagian dari pilar <strong>Pertahanan</strong>, kami memberikan edukasi mengenai mitigasi bencana pesisir, seperti banjir rob dan abrasi. Masyarakat diajak untuk memahami jalur evakuasi dan pentingnya sabuk hijau mangrove sebagai benteng alami.</p>
+                <h3 class="text-xl font-bold text-kbn-700 mt-6 mb-2">Fokus Edukasi:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li>Simulasi evakuasi mandiri.</li>
+                    <li>Pembuatan Alat Pemecah Ombak (APO) sederhana.</li>
+                    <li>Wawasan kebangsaan dan cinta tanah air.</li>
+                </ul>
+            `
+        }
+    };
+
+    function openActivityDetail(id) {
+        const data = activityData[id];
+        if(!data) return;
+
+        // Hide grid, Show Detail
+        document.getElementById('activity-grid').classList.add('hidden');
+        const detailSection = document.getElementById('activity-detail');
+        detailSection.classList.remove('hidden');
+        
+        // Populate Data
+        document.getElementById('detail-title').innerText = data.title;
+        document.getElementById('detail-img').src = data.img;
+        document.getElementById('detail-content').innerHTML = data.content;
+        
+        // Scroll to top of section
+        window.scrollTo({ top: document.getElementById('kegiatan').offsetTop, behavior: 'smooth' });
+    }
+
+    function closeActivityDetail() {
+        document.getElementById('activity-detail').classList.add('hidden');
+        document.getElementById('activity-grid').classList.remove('hidden');
+        window.scrollTo({ top: document.getElementById('kegiatan').offsetTop, behavior: 'smooth' });
+    }
+
+    // --- HORIZONTAL SCROLL BUTTONS ---
+    function scrollLeft(id) {
+        document.getElementById(id).scrollBy({ left: -320, behavior: 'smooth' });
+    }
+    function scrollRight(id) {
+        document.getElementById(id).scrollBy({ left: 320, behavior: 'smooth' });
+    }
+
+    // --- WHATSAPP FORM LOGIC (UPDATED) ---
+    const contactForm = document.getElementById('contactForm');
+    if(contactForm) {
+        contactForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            
+            // Ambil nilai dari form
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const msg = document.getElementById('message').value.trim();
+
+            if(!name || !email || !msg) {
+                alert('Mohon lengkapi semua data.');
+                return;
+            }
+
+            // Tampilkan pesan loading
+            document.getElementById('sentMsg').classList.remove('hidden');
+
+            // Format Pesan WhatsApp
+            // %0a adalah kode untuk baris baru (enter) di URL
+            // UPDATED NUMBER
+            const whatsappNumber = "6285694468028"; 
+            const text = `Halo Admin KBN Sukawali,%0a%0aPerkenalkan, saya:%0aNama: ${name}%0aEmail: ${email}%0a%0aPesan:%0a${msg}`;
+            
+            // Buat URL WhatsApp
+            const waURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+
+            // Buka WhatsApp di tab baru setelah jeda singkat
+            setTimeout(() => {
+                window.open(waURL, '_blank');
+                document.getElementById('sentMsg').classList.add('hidden');
+                contactForm.reset();
+            }, 1500);
+        });
+    }
+  </script>
+</body>
+</html>
